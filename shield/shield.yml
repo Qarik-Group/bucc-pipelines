@@ -17,7 +17,7 @@ jobs:
       stemcells: [ stemcell/stemcell.tgz ]
       # releases: [ releases/release.tgz]
       ops_files:
-        - bucc-pipelines/shield/scripts/shield-targets.yml
+        - bucc-pipelines/shield/operators/shield-targets.yml
         - shield-deployment/manifests/operators/dev.yml
       vars:
         static_ip: 10.244.0.34
