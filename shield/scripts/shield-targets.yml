@@ -1,0 +1,102 @@
+- type: replace
+  path: /instance_groups/name=shield/jobs/-
+  value:
+    name:    shield-addon-bbr
+    release: shield-addon-bbr
+
+- type: replace
+  path: /releases/-
+  value:
+    name: shield-addon-bbr
+    version: latest
+    url: https://github.com/shieldproject/shield-addon-bbr-boshrelease/releases/download/v0.1.1/shield-addon-bbr-0.1.1.tgz
+    sha1: 6d56288131751680a1570eefc979b0a208af1d31
+
+- type: replace
+  path: /instance_groups/name=shield/jobs/-
+  value:
+    name:    store
+    release: shield
+    properties:
+      port: 8181
+      ssl_port: 8443
+      tls:
+        certificate: ((store-tls.certificate))
+        key:         ((store-tls.private_key))
+      webdav:
+        auth:
+          users:
+            - username: admin
+              password: admin
+
+- type: replace
+  path: /variables/-
+  value:
+    name: store-ca
+    type: certificate
+    options:
+      is_ca: true
+      common_name: storeca
+
+- type: replace
+  path: /variables/-
+  value:
+    name: store-tls
+    type: certificate
+    options:
+      ca: store-ca
+      common_name: store
+      extended_key_usage:
+        - client_auth
+        - server_auth
+      alternative_names:
+        - 127.0.0.1
+        - ((static_ip))
+        - "*.store.default.shield.bosh"
+
+- type: replace
+  path: /instance_groups/name=shield/jobs/-
+  value:
+    name:    import
+    release: shield
+    properties:
+      domain: ((static_ip))
+      import:
+        core: https://((static_ip))
+        ca: ((shield-tls.ca))
+        token: tokenplaceholder
+        tenants:
+        - name: main
+          members:
+            - user: admin@local
+              role: admin
+          storage:
+            - name: default
+              summary: ""
+              agent: ((static_ip)):5444
+              plugin: webdav
+              config:
+                url: ((static_ip)):8443
+                username: admin
+                password: admin
+                skip_ssl_validation: true
+
+          policies:
+            - name: default
+              summary: ""
+              days: 10
+          systems:
+            - name: bosh-bbr
+              plugin: bbr-director
+              summary: ""
+              agent: ((static_ip)):5444
+              config:
+                bbr_host: ((/concourse/main/bosh_environment))
+                bbr_sshusername: jumpbox
+                bbr_privatekey: ((/concourse/main/bosh_ssh_private_key))
+              jobs:
+                - name: bosh
+                  when: daily 4am
+                  policy: default
+                  storage: default
+                  paused: false
