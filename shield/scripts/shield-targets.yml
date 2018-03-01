@@ -76,7 +76,7 @@
               agent: ((static_ip)):5444
               plugin: webdav
               config:
-                url: ((static_ip)):8443
+                url: https://((static_ip)):8443
                 username: admin
                 password: admin
                 skip_ssl_validation: true
