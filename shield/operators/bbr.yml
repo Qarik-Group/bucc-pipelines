@@ -19,8 +19,8 @@
     release: shield
     properties:
       domain: ((static_ip))
+      generate_token: true
       import:
-        generate_token: true
         core: https://((static_ip))
         ca: ((shield-tls.ca))
         tenants:
