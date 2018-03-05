@@ -19,7 +19,7 @@
     release: shield
     properties:
       domain: ((static_ip))
-      generate_token: true
+      #generate_token: true
       import:
         core: https://((static_ip))
         ca: ((shield-tls.ca))
