@@ -20,9 +20,9 @@
     properties:
       domain: ((static_ip))
       import:
+        generate_token: true
         core: https://((static_ip))
         ca: ((shield-tls.ca))
-        token: tokenplaceholder
         tenants:
         - name: main
           members:
