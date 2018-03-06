@@ -2,6 +2,8 @@ required:
 - worker_instances
 - worker_vm_type
 - worker_network_name
+- worker_azs
+- worker_tags
 properties:
   worker_instances:
     type: integer
@@ -17,14 +19,14 @@ properties:
     properties:
       value:
         type: array
+        default: [z1, z2, z3]
         items:
           type: string
-          default: [z1, z2, z3]
   worker_tags:
     type: object
     properties:
       value:
         type: array
+        default: []
         items:
           type: string
-          default: []
