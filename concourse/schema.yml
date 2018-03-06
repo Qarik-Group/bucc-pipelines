@@ -16,17 +16,19 @@ properties:
     default: default
   worker_azs:
     type: object
+    default:
+      value: [z1, z2, z3]
     properties:
       value:
         type: array
-        default: [z1, z2, z3]
         items:
           type: string
   worker_tags:
     type: object
+    default:
+      value: []
     properties:
       value:
         type: array
-        default: []
         items:
           type: string
