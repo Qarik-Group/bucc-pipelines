@@ -21,8 +21,8 @@ jobs:
         - bucc-pipelines/shield/operators/webdav.yml
         - shield-deployment/manifests/operators/dev.yml
       vars:
-        static_ip: 10.244.0.34
-        domain: 10.244.0.34
+        static_ip: ((static_ip))
+        domain: ((domain))
   - put: bosh-errand
     params:
       name: import
