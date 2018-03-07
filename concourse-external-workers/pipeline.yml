@@ -12,11 +12,11 @@ jobs:
         concourse_sha1: 99e134676df72e18c719ccfbd7977bd9449e6fd4
         garden_runc_version: 1.9.4
         garden_runc_sha1: 9cccd7685ac075ad6956cba3ab5881e3435cd7e3
-        instances: 1
-        azs: [z1, z2, z3]
-        worker_vm_type: default
-        external_worker_network_name: default
-        worker_tags:
+        instances: ((worker_instances))
+        worker_vm_type: ((worker_vm_type))
+        external_worker_network_name: ((worker_network_name))
+        azs: ((worker_azs.value))
+        worker_tags: ((worker_tags.value))
         tsa_host: ((concourse_tsa_host))
         tsa_host_key.public_key: ((concourse_tsa_host_key.public_key))
         worker_key: ((concourse_worker_key))
@@ -27,15 +27,15 @@ resources:
   source:
     uri: https://github.com/concourse/concourse-deployment.git
     branch: master
-    
+
 - name: stemcell
   type: bosh-io-stemcell
   source: { name: ((bosh_stemcell)) }
-    
+
 - name: deploy
   type: bosh-deployment
   source:
-    deployment: concourse_workers  
+    deployment: concourse_workers
     target: ((bosh_environment))
     client: ((bosh_client))
     client_id: ((bosh_client))
