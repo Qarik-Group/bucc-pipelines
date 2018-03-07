@@ -1,0 +1,79 @@
+#!/bin/bash
+
+pipeline_file=$(mktemp)
+
+set -x
+set -e
+
+for pipeline in $(find * -type d -maxdepth 1); do
+    jq -n -r --arg pipeline "${pipeline}" '{
+      name: $pipeline,
+      plan: [{
+          get: "repo", trigger: true, resource: "repo-\($pipeline)"
+        },{
+          put: "credhub-schema-\($pipeline)",
+          params: { schema_file: "repo/\($pipeline)/schema.yml" }
+        },{
+          put: "concourse",
+          params: { pipelines: [{
+            name: $pipeline,
+            team: "main",
+            config_file: "repo/\($pipeline)/pipeline.yml"
+          }]}
+        }
+      ]
+    }'
+done | jq -s -c '{jobs: .}' >> ${pipeline_file}
+
+for pipeline in $(find * -type d -maxdepth 1); do
+    jq -c -n -r --arg pipeline "${pipeline}" '[{
+      name: "credhub-schema-\($pipeline)",
+      type: "credhub-schema",
+      source: {
+        server: "((credhub_url))",
+        client_name: "((credhub_username))",
+        client_secret: "((credhub_password))",
+        ca_cert: "((credhub_ca_cert))",
+        path: "/concourse/main/\($pipeline)"
+      }
+    },{
+        name: "repo-\($pipeline)",
+        type: "git",
+        source: {
+          uri: "https://github.com/starkandwayne/bucc-pipelines",
+          paths: ["\($pipeline)/*"]
+        }
+    }] | {resources: .}'
+done >> ${pipeline_file}
+
+jq -n -r '[{
+  name: "concourse-pipeline",
+  type: "docker-image",
+  source: { repository: "concourse/concourse-pipeline-resource" }
+},{
+  name: "credhub-schema",
+  type: "docker-image",
+  source: { repository: "rkoster/credhub-schema-resource" }
+}] | { resource_types: . }' >> ${pipeline_file}
+
+jq -n -r '[{
+  name: "concourse",
+  type: "concourse-pipeline",
+  source: {
+    target: "((concourse_url))",
+    insecure: "true",
+    teams: [{
+      name: "main",
+      username: "((concourse_username))",
+      password: "((concourse_password))"
+    }]
+  }
+}] | { resources: . }' >> ${pipeline_file}
+
+cat ${pipeline_file} | jq -s '
+    map(to_entries | add) | group_by(.key) |
+    map({"\(.[0].key)": map(.value | add)}) | add
+'
+
+
+# fly -t bucc set-pipeline -p base -c pipeline.yml

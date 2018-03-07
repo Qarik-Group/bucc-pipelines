@@ -20,6 +20,15 @@ resources:
     uri: "https://github.com/starkandwayne/bucc-pipelines"
     branch: base-pipeline
 
+- name: credhub
+  type: credhub-schema
+  source:
+    server: ((credhub_url))
+    client_name: ((credhub_username))
+    client_secret: ((credhub_password))
+    ca_cert: ((credhub_ca_cert))
+    path: /concourse/main/concourse-worker
+
 - name: concourse
   type: concourse-pipeline
   source:
@@ -29,15 +38,6 @@ resources:
     - name: main
       username: ((concourse_username))
       password: ((concourse_password))
-
-- name: credhub
-  type: credhub-schema
-  source:
-    server: ((credhub_url))
-    client_name: ((credhub_username))
-    client_secret: ((credhub_password))
-    ca_cert: ((credhub_ca_cert))
-    path: /concourse/main/concourse-worker
 
 resource_types:
 - name: concourse-pipeline
