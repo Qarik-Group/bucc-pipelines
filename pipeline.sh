@@ -99,6 +99,6 @@ resource_types:
 EOF
 
 bosh int <(echo -e "${base}") -o \
-     <(for pipeline in $(find * -type d -maxdepth 1); do
+     <(for pipeline in $(find * -maxdepth 0 -type d); do
            bosh int <(echo -e "${template}") -v name="${pipeline}"
        done)
