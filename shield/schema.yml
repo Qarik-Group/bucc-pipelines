@@ -5,6 +5,6 @@ properties:
   static_ip:
     type: string
     default: 10.244.0.34
-  worker_vm_type:
+  domain:
     type: string
     default: 10.244.0.34
