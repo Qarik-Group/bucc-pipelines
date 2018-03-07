@@ -1,3 +1,0 @@
-#!/bin/bash
-
-fly -t bucc set-pipeline -p base -c <(./pipeline.sh)
