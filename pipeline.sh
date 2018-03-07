@@ -27,6 +27,7 @@ read -r -d '' template <<'EOF'
     source:
       uri: "https://github.com/starkandwayne/bucc-pipelines"
       paths: ["((name))/*"]
+      branch: shield
 - type: replace
   path: /resources/-
   value:
@@ -74,6 +75,7 @@ resources:
   type: git
   source:
     uri: "https://github.com/starkandwayne/bucc-pipelines"
+    branch: shield
 - name: concourse
   type: concourse-pipeline
   source:
