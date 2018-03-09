@@ -1,17 +1,17 @@
 required:
-- worker_instances
+- instances
 - worker_vm_type
-- worker_network_name
+- external_worker_network_name
 - worker_azs
 - worker_tags
 properties:
-  worker_instances:
+  instances:
     type: integer
     default: 1
   worker_vm_type:
     type: string
     default: default
-  worker_network_name:
+  external_worker_network_name:
     type: string
     default: default
   worker_azs:
