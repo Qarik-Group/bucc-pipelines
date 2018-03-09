@@ -6,8 +6,12 @@ required:
 - worker_tags
 properties:
   instances:
-    type: integer
-    default: 1
+    type: object
+    default:
+      value: 1
+    properties:
+      value:
+        type: integer
   worker_vm_type:
     type: string
     default: default
