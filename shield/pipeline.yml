@@ -16,10 +16,7 @@ jobs:
       manifest: shield-deployment/manifests/shield.yml
       stemcells: [ stemcell/stemcell.tgz ]
       # releases: [ releases/release.tgz]
-      ops_files:
-        - bucc-pipelines/shield/operators/bbr.yml
-        - bucc-pipelines/shield/operators/webdav.yml
-        - shield-deployment/manifests/operators/dev.yml
+      ops_files: ((ops_files.value))
       vars:
         static_ip: ((static_ip))
         domain: ((domain))

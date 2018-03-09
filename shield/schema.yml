@@ -8,3 +8,17 @@ properties:
   domain:
     type: string
     default: 10.244.0.34
+  ops_files:
+    type: object
+    default: { value: [ bucc-pipelines/shield/operators/bbr.yml, bucc-pipelines/shield/operators/webdav.yml, shield-deployment/manifests/operators/dev.yml ] }
+    properties:
+      value:
+        type: array
+        uniqueItems: true
+        items:
+        - const: foo/bar.yml
+        additionalItems:
+          oneOf:
+          - const: bucc-pipelines/shield/operators/bbr.yml
+          - const: bucc-pipelines/shield/operators/webdav.yml
+          - const: shield-deployment/manifests/operators/dev.yml
