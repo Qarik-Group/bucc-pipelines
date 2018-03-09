@@ -16,7 +16,7 @@ properties:
         type: array
         uniqueItems: true
         items:
-        - const: foo/bar.yml
+        - const: bucc-pipelines/shield/operators/bbr.yml
         additionalItems:
           oneOf:
           - const: bucc-pipelines/shield/operators/bbr.yml
