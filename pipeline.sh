@@ -1,6 +1,6 @@
 #!/bin/bash
 
-read -r -d '' template <<'EOF'
+read -r -d '' template_concourse <<'EOF'
 - type: replace
   path: /jobs/-
   value:
@@ -9,10 +9,6 @@ read -r -d '' template <<'EOF'
     - get: repo
       trigger: true
       resource: repo-((name))
-    - put: credhub
-      resource: credhub-((name))
-      params:
-        schema_file: repo/((name))/schema.yml
     - put: concourse
       params:
         pipelines:
@@ -27,7 +23,17 @@ read -r -d '' template <<'EOF'
     source:
       uri: "https://github.com/starkandwayne/bucc-pipelines"
       paths: ["((name))/*"]
-      branch: shield
+EOF
+
+read -r -d '' template_credhub <<'EOF'
+- type: replace
+  path: /jobs/name=update-((name))-pipeline/plan/get=repo:after
+  value:
+    put: credhub
+    resource: credhub-((name))
+    params:
+      schema_file: repo/((name))/schema.yml
+
 - type: replace
   path: /resources/-
   value:
@@ -102,5 +108,8 @@ EOF
 
 bosh int <(echo -e "${base}") -o \
      <(for pipeline in $(find * -maxdepth 0 -type d); do
-           bosh int <(echo -e "${template}") -v name="${pipeline}"
+           bosh int <(echo -e "${template_concourse}") -v name="${pipeline}"
+           if [ -e ${pipeline}/schema.yml ]; then
+               bosh int <(echo -e "${template_credhub}") -v name="${pipeline}"
+           fi
        done)
