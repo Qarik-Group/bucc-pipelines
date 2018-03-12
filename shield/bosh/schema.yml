@@ -1,0 +1,19 @@
+required:
+- static_ip
+- domain
+properties:
+  static_ip:
+    type: string
+    default: 10.244.0.34
+  domain:
+    type: string
+    default: 10.244.0.34
+  s3_access_key_id:
+    type: string
+    default: ""
+  s3_secret_access_key:
+    type: string
+    default: ""
+  s3_bucket:
+    type: string
+    default: ""
