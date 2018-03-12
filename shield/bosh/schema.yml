@@ -10,10 +10,10 @@ properties:
     default: 10.244.0.34
   s3_access_key_id:
     type: string
-    default: ""
+    default: null
   s3_secret_access_key:
     type: string
-    default: ""
+    default: null
   s3_bucket:
     type: string
-    default: ""
+    default: null
