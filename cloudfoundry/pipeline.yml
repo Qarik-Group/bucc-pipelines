@@ -14,7 +14,6 @@ jobs:
       ops_files:
       - cf-deployment/operations/bosh-lite.yml
 
-
 resources:
 - name: cf-deployment
   type: git
@@ -26,7 +25,7 @@ resources:
   type: git
   source:
     uri: https://github.com/starkandwayne/bucc-pipelines.git
-    branch: 
+    branch: cf
 
 - name: stemcell
   type: bosh-io-stemcell
