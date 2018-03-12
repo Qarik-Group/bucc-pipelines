@@ -23,6 +23,7 @@ read -r -d '' template_concourse <<'EOF'
     source:
       uri: "https://github.com/starkandwayne/bucc-pipelines"
       paths: ["((name))/*"]
+      branch: shield
 EOF
 
 read -r -d '' template_credhub <<'EOF'
