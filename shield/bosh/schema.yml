@@ -9,11 +9,8 @@ properties:
     type: string
     default: 10.244.0.34
   s3_access_key_id:
-    type: string, null
-    default: null
+    type: string
   s3_secret_access_key:
-    type: string, null
-    default: null
+    type: string
   s3_bucket:
-    type: string, null
-    default: null
+    type: string
