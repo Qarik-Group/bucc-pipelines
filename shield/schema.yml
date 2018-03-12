@@ -4,7 +4,7 @@ required:
 properties:
   ops_files:
     type: object
-    default: { value: [ bucc-pipelines/shield/bosh/operators/bbr.yml, bucc-pipelines/shield/bosh/operators/webdav.yml, shield-deployment/manifests/operators/dev.yml ] }
+    default: { value: [ bucc-pipelines/shield/bosh/operators/bbr.yml, bucc-pipelines/shield/bosh/operators/aws.yml, bucc-pipelines/shield/bosh/operators/webdav.yml, shield-deployment/manifests/operators/dev.yml ] }
     properties:
       value:
         type: array
@@ -13,7 +13,7 @@ properties:
         - const: bucc-pipelines/shield/bosh/operators/bbr.yml
         additionalItems:
           anyOf:
-          # - const: bucc-pipelines/shield/bosh/operators/bbr.yml
+          - const: bucc-pipelines/shield/bosh/operators/bbr.yml
           - const: shield-deployment/manifests/operators/dev.yml
           - const: bucc-pipelines/shield/bosh/operators/webdav.yml
           oneOf:
