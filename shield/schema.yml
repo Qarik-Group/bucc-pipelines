@@ -2,12 +2,6 @@ required:
 - static_ip
 - domain
 properties:
-  static_ip:
-    type: string
-    default: 10.244.0.34
-  domain:
-    type: string
-    default: 10.244.0.34
   ops_files:
     type: object
     default: { value: [ bucc-pipelines/shield/bosh/operators/bbr.yml, bucc-pipelines/shield/bosh/operators/webdav.yml, shield-deployment/manifests/operators/dev.yml ] }
@@ -19,9 +13,9 @@ properties:
         - const: bucc-pipelines/shield/bosh/operators/bbr.yml
         additionalItems:
           anyOf:
-          - const: bucc-pipelines/shield/bosh/operators/bbr.yml
+          # - const: bucc-pipelines/shield/bosh/operators/bbr.yml
           - const: shield-deployment/manifests/operators/dev.yml
-          - const: bucc-pipelines/shield/bosh/operators/webdav.yml
-          # oneOf:
           # - const: bucc-pipelines/shield/bosh/operators/webdav.yml
-          # - const: bucc-pipelines/shield/bosh/operators/aws.yml
+          oneOf:
+          - const: bucc-pipelines/shield/bosh/operators/webdav.yml
+          - const: bucc-pipelines/shield/bosh/operators/aws.yml
