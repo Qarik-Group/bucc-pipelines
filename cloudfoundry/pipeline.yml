@@ -5,13 +5,14 @@ jobs:
     - get: stemcell
     - get: cf-deployment
     - get: bucc-pipelines
-  # - put: credhub
-  #   params: { schema_file: bucc-pipelines/cloudfoundry/bosh/schema.yml }
+  - put: credhub
+    params: { schema_file: bucc-pipelines/cloudfoundry/bosh/schema.yml }
   - put: deploy
     params:
       manifest: cf-deployment/cf-deployment.yml
       stemcells: [ stemcell/stemcell.tgz ]
-      # ops_files:
+      ops_files:
+      - cf-deployment/operations/bosh-lite.yml
 
 
 resources:
@@ -40,14 +41,14 @@ resources:
     client_secret: ((bosh_client_secret))
     ca_cert: ((bosh_ca_cert))
 
-# - name: credhub
-#   type: credhub-schema
-#   source:
-#     server: ((credhub_url))
-#     client_name: ((credhub_username))
-#     client_secret: ((credhub_password))
-#     ca_cert: ((credhub_ca_cert))
-#     path: /((bosh_name))/cf
+- name: credhub
+  type: credhub-schema
+  source:
+    server: ((credhub_url))
+    client_name: ((credhub_username))
+    client_secret: ((credhub_password))
+    ca_cert: ((credhub_ca_cert))
+    path: /((bosh_name))/cf
 
 resource_types:
 - name: bosh-deployment
@@ -55,8 +56,8 @@ resource_types:
   source:
     repository: cloudfoundry/bosh-deployment-resource
     tag: latest
-# - name: credhub-schema
-#   type: docker-image
-#   source:
-#     repository: rkoster/credhub-schema-resource
-#     tag: latest
+- name: credhub-schema
+  type: docker-image
+  source:
+    repository: rkoster/credhub-schema-resource
+    tag: latest
