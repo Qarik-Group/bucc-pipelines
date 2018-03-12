@@ -1,1 +1,38 @@
-{}
+required:
+- instances
+- worker_vm_type
+- external_worker_network_name
+- worker_azs
+- worker_tags
+properties:
+  instances:
+    type: object
+    default:
+      value: 1
+    properties:
+      value:
+        type: integer
+  worker_vm_type:
+    type: string
+    default: default
+  external_worker_network_name:
+    type: string
+    default: default
+  worker_azs:
+    type: object
+    default:
+      value: [z1, z2, z3]
+    properties:
+      value:
+        type: array
+        items:
+          type: string
+  worker_tags:
+    type: object
+    default:
+      value: []
+    properties:
+      value:
+        type: array
+        items:
+          type: string
