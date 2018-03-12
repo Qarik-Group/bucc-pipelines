@@ -8,7 +8,6 @@ jobs:
   # - put: credhub
   #   params: { schema_file: bucc-pipelines/cloudfoundry/bosh/schema.yml }
   - put: deploy
-    tags: [ local ]
     params:
       manifest: cf-deployment/cf-deployment.yml
       stemcells: [ stemcell/stemcell.tgz ]
