@@ -26,6 +26,7 @@ resources:
   type: git
   source:
     uri: https://github.com/starkandwayne/bucc-pipelines.git
+    branch: 
 
 - name: stemcell
   type: bosh-io-stemcell
