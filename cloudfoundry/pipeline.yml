@@ -33,7 +33,7 @@ resources:
 - name: deploy
   type: bosh-deployment
   source:
-    deployment: concourse_workers
+    deployment: cf
     target: ((bosh_environment))
     client: ((bosh_client))
     client_id: ((bosh_client))
