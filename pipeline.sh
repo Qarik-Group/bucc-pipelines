@@ -23,6 +23,7 @@ read -r -d '' template_concourse <<'EOF'
     source:
       uri: "https://github.com/starkandwayne/bucc-pipelines"
       paths: ["((name))/*"]
+      branch: cf
 EOF
 
 read -r -d '' template_credhub <<'EOF'
@@ -81,6 +82,7 @@ resources:
   type: git
   source:
     uri: "https://github.com/starkandwayne/bucc-pipelines"
+    branch: cf
 - name: concourse
   type: concourse-pipeline
   source:
