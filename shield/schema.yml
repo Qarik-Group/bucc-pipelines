@@ -13,7 +13,7 @@ properties:
         - const: bucc-pipelines/shield/bosh/operators/bbr.yml
         additionalItems:
           anyOf:
-          # - const: bucc-pipelines/shield/bosh/operators/bbr.yml
+          - const: bucc-pipelines/shield/bosh/operators/bbr.yml
           - const: shield-deployment/manifests/operators/dev.yml
           # - const: bucc-pipelines/shield/bosh/operators/webdav.yml
           oneOf:
