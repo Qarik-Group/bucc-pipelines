@@ -33,6 +33,7 @@ resources:
   type: git
   source:
     uri: https://github.com/starkandwayne/bucc-pipelines.git
+    branch: cloudfoundry
 
 - name: stemcell
   type: bosh-io-stemcell
