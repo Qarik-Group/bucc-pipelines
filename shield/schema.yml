@@ -10,7 +10,7 @@ properties:
     default: 10.244.0.34
   ops_files:
     type: object
-    default: { value: [ bucc-pipelines/bosh/shield/operators/bbr.yml, bucc-pipelines/bosh/shield/operators/webdav.yml, shield-deployment/bosh/manifests/operators/dev.yml ] }
+    default: { value: [ bucc-pipelines/bosh/shield/operators/bbr.yml, bucc-pipelines/shield/bosh/operators/webdav.yml, shield-deployment/manifests/operators/dev.yml ] }
     properties:
       value:
         type: array
@@ -18,7 +18,8 @@ properties:
         items:
         - const: bucc-pipelines/shield/bosh/operators/bbr.yml
         additionalItems:
-          oneOf:
-          - const: bucc-pipelines/shield/bosh/operators/bbr.yml
-          - const: bucc-pipelines/shield/bosh/operators/webdav.yml
+          anyOf:
           - const: shield-deployment/manifests/operators/dev.yml
+          oneOf:
+          - const: bucc-pipelines/shield/bosh/operators/webdav.yml
+          - const: bucc-pipelines/shield/bosh/operators/aws.yml
