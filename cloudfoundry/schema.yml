@@ -1,0 +1,55 @@
+required:
+properties:
+  ops_files:
+    type: object
+    default: { value: [ cf-deployment/operations/bosh-lite.yml ] }
+    properties:
+      value:
+        type: array
+        uniqueItems: true
+        ## TODO: do we have need for operators that are always required?
+        # items:
+        # - const: bucc-pipelines/shield/bosh/operators/bbr.yml
+        additionalItems:
+          anyOf:
+          - const: cf-deployment/operations/bosh-lite.yml
+          - const: cf-deployment/operations/use-s3-blobstore.yml
+          - const: cf-deployment/operations/azure.yml
+          - const: cf-deployment/operations/use-azure-storage-blobstore.yml
+          - const: cf-deployment/operations/use-gcs-blobstore.yml
+          - const: cf-deployment/operations/use-gcs-blobstore-service-account.yml
+          - const: cf-deployment/operations/openstack.yml
+          - const: cf-deployment/operations/use-swift-blobstore.yml
+          - const: cf-deployment/operations/cf-syslog-skip-cert-verify.yml
+          - const: cf-deployment/operations/configure-confab-timeout.yml
+          - const: cf-deployment/operations/configure-default-router-group.yml
+          - const: cf-deployment/operations/disable-router-tls-termination.yml
+          - const: cf-deployment/operations/enable-cc-rate-limiting.yml
+          - const: cf-deployment/operations/enable-nfs-ldap.yml
+          - const: cf-deployment/operations/enable-nfs-volume-service.yml
+          - const: cf-deployment/operations/enable-privileged-container-support.yml
+          - const: cf-deployment/operations/enable-uniq-consul-node-name.yml
+          - const: cf-deployment/operations/override-app-domains.yml
+          - const: cf-deployment/operations/rename-deployment.yml
+          - const: cf-deployment/operations/rename-network.yml
+          - const: cf-deployment/operations/scale-database-cluster.yml
+          - const: cf-deployment/operations/scale-to-one-az.yml
+          - const: cf-deployment/operations/secure-rep-admin-api.yml
+          - const: cf-deployment/operations/secure-rep-admin-api-windows.yml
+          - const: cf-deployment/operations/set-bbs-active-key.yml
+          - const: cf-deployment/operations/set-router-static-ips.yml
+          - const: cf-deployment/operations/stop-skipping-tls-validation.yml
+          - const: cf-deployment/operations/use-blobstore-cdn.yml
+          - const: cf-deployment/operations/use-compiled-releases.yml
+          - const: cf-deployment/operations/use-external-dbs.yml
+          - const: cf-deployment/operations/use-haproxy.yml
+          - const: cf-deployment/operations/use-haproxy-public-network.yml
+          - const: cf-deployment/operations/use-latest-stemcell.yml
+          - const: cf-deployment/operations/use-latest-windows-stemcell.yml
+          - const: cf-deployment/operations/use-postgres.yml
+          - const: cf-deployment/operations/use-trusted-ca-cert-for-apps.yml
+          - const: cf-deployment/operations/windows-cell.yml
+          ## TODO: still need to figure out how this works, we have the need for choices
+          # oneOf:
+          # - const: bucc-pipelines/shield/bosh/operators/webdav.yml
+          # - const: bucc-pipelines/shield/bosh/operators/aws.yml

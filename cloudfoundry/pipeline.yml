@@ -11,8 +11,7 @@ jobs:
     params:
       manifest: cf-deployment/cf-deployment.yml
       stemcells: [ stemcell/stemcell.tgz ]
-      ops_files:
-      - cf-deployment/operations/bosh-lite.yml
+      ops_files: ((ops_files.value))
 
 resources:
 - name: cf-deployment
