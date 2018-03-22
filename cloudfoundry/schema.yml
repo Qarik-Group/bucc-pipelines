@@ -1,4 +1,5 @@
 required:
+- ops_files
 properties:
   ops_files:
     type: object
