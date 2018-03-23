@@ -1,6 +1,5 @@
 required:
-- static_ip
-- domain
+- ops_files
 properties:
   ops_files:
     type: object
