@@ -3,7 +3,7 @@ jobs:
   plan:
   - aggregate:
     - get: stemcell
-    # - get: releases
+    - get: releases
     - get: bosh-deployment
     - get: shield-deployment
     - get: bucc-pipelines
@@ -17,7 +17,7 @@ jobs:
     params:
       manifest: shield-deployment/manifests/shield.yml
       stemcells: [ stemcell/stemcell.tgz ]
-      # releases: [ releases/release.tgz]
+      releases: [ releases/release.tgz]
       ops_files: ((ops_files.value))
   - put: bosh-errand
     params:
@@ -48,10 +48,10 @@ resources:
   source:
     name: ((bosh_stemcell))
 
-# - name: releases
-#   type: bosh-io-release
-#   source:
-#     repository: starkandwayne/shield-boshreleasee
+- name: releases
+  type: bosh-io-release
+  source:
+    repository: starkandwayne/shield-boshreleasee
 
 - name: credhub
   type: credhub-schema
