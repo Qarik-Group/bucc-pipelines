@@ -8,7 +8,6 @@ jobs:
   - put: credhub
     params: { schema_file: bucc-pipelines/concourse-external-workers/bosh/schema.yml }
   - put: deploy
-    tags: [ local ]
     params:
       manifest: concourse-deployment/cluster/external-worker.yml
       stemcells: [ stemcell/stemcell.tgz ]
