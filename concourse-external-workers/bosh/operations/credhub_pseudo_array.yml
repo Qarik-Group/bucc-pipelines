@@ -1,5 +1,5 @@
 - type: replace
-  path: /instance_groups/name=worker/jobs/name=groundcrew/properties/tags
+  path: /instance_groups/name=worker/jobs/name=worker/properties/tags
   value: ((worker_tags.value))
 
 - type: replace

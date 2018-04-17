@@ -1,11 +1,11 @@
 - type: replace
-  path: /instance_groups/name=worker/jobs/name=groundcrew/properties/tsa/host
+  path: /instance_groups/name=worker/jobs/name=worker/properties/tsa/host
   value: ((/concourse/main/concourse_tsa_host))
 
 - type: replace
-  path: /instance_groups/name=worker/jobs/name=groundcrew/properties/tsa/host_public_key
+  path: /instance_groups/name=worker/jobs/name=worker/properties/tsa/host_public_key
   value: ((/concourse/main/concourse_tsa_host_key.public_key))
 
 - type: replace
-  path: /instance_groups/name=worker/jobs/name=groundcrew/properties/tsa/worker_key
+  path: /instance_groups/name=worker/jobs/name=worker/properties/tsa/worker_key
   value: ((/concourse/main/concourse_worker_key))
