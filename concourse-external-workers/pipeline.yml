@@ -17,10 +17,10 @@ jobs:
       - bucc-pipelines/concourse-external-workers/bosh/operations/credhub_pseudo_array.yml
       vars:
         deployment_name: concourse_workers
-        concourse_version: 3.8.0
-        concourse_sha1: 99e134676df72e18c719ccfbd7977bd9449e6fd4
-        garden_runc_version: 1.9.4
-        garden_runc_sha1: 9cccd7685ac075ad6956cba3ab5881e3435cd7e3
+        concourse_version: 3.11.0
+        concourse_sha1: 57a64d9a95922ba73fe2deb4ddcb225a8db5015b
+        garden_runc_version: 1.13.0
+        garden_runc_sha1: 74814d3ee8c17b1e79ac6f124ae0fe50af7a5164
 
 resources:
 - name: concourse-deployment
