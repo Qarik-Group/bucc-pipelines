@@ -18,8 +18,8 @@ jobs:
         deployment_name: concourse_workers
         concourse_version: 3.11.0
         concourse_sha1: 57a64d9a95922ba73fe2deb4ddcb225a8db5015b
-        garden_runc_version: 1.13.0
-        garden_runc_sha1: 74814d3ee8c17b1e79ac6f124ae0fe50af7a5164
+        garden_runc_version: 1.12.1
+        garden_runc_sha1: ed353e41eec34c3713d6d80c4cc890afc7291cca
 
 resources:
 - name: concourse-deployment
