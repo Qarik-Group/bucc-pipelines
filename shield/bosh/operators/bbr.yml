@@ -1,0 +1,49 @@
+- type: replace
+  path: /instance_groups/name=shield/jobs/-
+  value:
+    name:    shield-addon-bbr
+    release: shield-addon-bbr
+
+- type: replace
+  path: /releases/-
+  value:
+    name: shield-addon-bbr
+    version: 0.1.1
+    url: https://github.com/shieldproject/shield-addon-bbr-boshrelease/releases/download/v0.1.1/shield-addon-bbr-0.1.1.tgz
+    sha1: 6d56288131751680a1570eefc979b0a208af1d31
+
+- type: replace
+  path: /instance_groups/name=shield/jobs/-
+  value:
+    name:    import
+    release: shield
+    properties:
+      domain: ((static_ip))
+      generate_token: true
+      import:
+        core: https://((static_ip))
+        ca: ((shield-tls.ca))
+        tenants:
+        - name: main
+          members:
+            - user: admin@local
+              role: admin
+          policies:
+            - name: default
+              summary: ""
+              days: 10
+          systems:
+            - name: bosh-bbr
+              plugin: bbr-director
+              summary: ""
+              agent: ((static_ip)):5444
+              config:
+                bbr_host: ((/concourse/main/bosh_environment))
+                bbr_sshusername: jumpbox
+                bbr_privatekey: ((/concourse/main/bosh_ssh_private_key))
+              jobs:
+                - name: bosh
+                  when: daily 4am
+                  policy: default
+                  storage: default
+                  paused: false

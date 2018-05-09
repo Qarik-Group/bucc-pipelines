@@ -1,0 +1,11 @@
+- type: replace
+  path: /instance_groups/name=shield/jobs/name=import/properties/import/tenants/name=main/storage?
+  value:
+    - name: default
+      summary: ""
+      agent: ((static_ip)):5444
+      plugin: s3
+      config:
+        access_key_id: (s3_(access_key_id))
+        secret_access_key: ((s3_secret_access_key))
+        bucket: ((s3_bucket))
