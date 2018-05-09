@@ -3,7 +3,7 @@ jobs:
   plan:
   - aggregate:
     - get: stemcell
-    - get: releases
+    # - get: releases
     - get: bosh-deployment
     - get: shield-deployment
     - get: bucc-pipelines
@@ -48,10 +48,10 @@ resources:
   source:
     name: ((bosh_stemcell))
 
-- name: releases
-  type: bosh-io-release
-  source:
-    repository: starkandwayne/shield-boshreleasee
+# - name: releases
+#   type: bosh-io-release
+#   source:
+#     repository: starkandwayne/shield-boshreleasee
 
 - name: credhub
   type: credhub-schema
