@@ -17,7 +17,7 @@ jobs:
     params:
       manifest: shield-deployment/manifests/shield.yml
       stemcells: [ stemcell/stemcell.tgz ]
-      releases: [ releases/release.tgz]
+      # releases: [ releases/release.tgz]
       ops_files: ((ops_files.value))
   - put: bosh-errand
     params:
