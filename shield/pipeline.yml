@@ -1,0 +1,115 @@
+jobs:
+- name: shield
+  plan:
+  - aggregate:
+    - get: stemcell
+    - get: releases
+    - get: bosh-deployment
+    - get: shield-deployment
+    - get: bucc-pipelines
+  - put: credhub
+    params: { schema_file: bucc-pipelines/shield/bosh/schema.yml }
+  - put: cloud-config
+    params:
+      manifest: bosh-deployment/((bosh_cpi))/cloud-config.yml
+      releases: []
+  - put: deploy
+    params:
+      manifest: shield-deployment/manifests/shield.yml
+      stemcells: [ stemcell/stemcell.tgz ]
+      releases: [ releases/release.tgz]
+      ops_files: ((ops_files.value))
+  - put: bosh-errand
+    params:
+      name: import
+      when_changed: true
+
+resources:
+- name: bucc-pipelines
+  type: git
+  source:
+    uri: https://github.com/starkandwayne/bucc-pipelines.git
+    branch: master
+
+- name: bosh-deployment
+  type: git
+  source:
+    uri: https://github.com/cloudfoundry/bosh-deployment.git
+    branch: master
+
+- name: shield-deployment
+  type: git
+  source:
+    uri: https://github.com/starkandwayne/shield-boshrelease.git
+    branch: master
+
+- name: stemcell
+  type: bosh-io-stemcell
+  source:
+    name: ((bosh_stemcell))
+
+- name: releases
+  type: bosh-io-release
+  source:
+    repository: starkandwayne/shield-boshreleasee
+
+- name: credhub
+  type: credhub-schema
+  source:
+    server: ((credhub_url))
+    client_name: ((credhub_username))
+    client_secret: ((credhub_password))
+    ca_cert: ((credhub_ca_cert))
+    path: /((bosh_name))/shield
+
+- name: deploy
+  type: bosh-deployment
+  source:
+    <<: *deployment
+    <<: *bosh_env
+
+- name: cloud-config
+  type: bosh-config
+  source:
+    type: cloud-config
+    <<: *bosh_env
+
+- name: bosh-errand
+  type: bosh-errand
+  source:
+    <<: *deployment
+    <<: *bosh_env
+
+params:
+  bosh_env: &bosh_env
+    target: ((bosh_environment))
+    client: ((bosh_client))
+    client_id: ((bosh_client))
+    client_secret: ((bosh_client_secret))
+    ca_cert: ((bosh_ca_cert))
+  deployment: &deployment
+    deployment: shield
+
+resource_types:
+- name: bosh-config
+  type: docker-image
+  source:
+    repository: rkoster/bosh-config-resource
+    tag: latest
+
+- name: bosh-deployment
+  type: docker-image
+  source:
+    repository: cloudfoundry/bosh-deployment-resource
+    tag: latest
+
+- name: bosh-errand
+  type: docker-image
+  source:
+    repository: starkandwayne/bosh2-errand-resource
+
+- name: credhub-schema
+  type: docker-image
+  source:
+    repository: rkoster/credhub-schema-resource
+    tag: latest

@@ -1,0 +1,20 @@
+required:
+- ops_files
+properties:
+  ops_files:
+    type: object
+    default: { value: [ bucc-pipelines/shield/bosh/operators/bbr.yml, bucc-pipelines/shield/bosh/operators/webdav.yml, shield-deployment/manifests/operators/dev.yml ] }
+    properties:
+      value:
+        type: array
+        uniqueItems: true
+        items:
+        - const: bucc-pipelines/shield/bosh/operators/bbr.yml
+        additionalItems:
+          anyOf:
+          - const: bucc-pipelines/shield/bosh/operators/bbr.yml
+          - const: shield-deployment/manifests/operators/dev.yml
+          - const: bucc-pipelines/shield/bosh/operators/webdav.yml
+          # oneOf:
+          # - const: bucc-pipelines/shield/bosh/operators/webdav.yml
+          # - const: bucc-pipelines/shield/bosh/operators/aws.yml
