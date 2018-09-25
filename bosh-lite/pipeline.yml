@@ -11,6 +11,7 @@ jobs:
       stemcells: [ stemcell/stemcell.tgz ]
       ops_files:
       - bosh-deployment/misc/bosh-dev.yml
+      - bosh-deployment/bosh-lite.yml
       - bucc-pipelines/bosh-lite/bosh/operations/name.yml
       vars:
         deployment_name: bosh-lite
