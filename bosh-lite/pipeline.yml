@@ -1,0 +1,48 @@
+jobs:
+- name: bosh-lite
+  plan:
+  - aggregate:
+    - get: stemcell
+    - get: bosh-deployment
+    - get: bucc-pipelines
+  - put: deploy
+    params:
+      manifest: bosh-deployment/bosh.yml
+      stemcells: [ stemcell/stemcell.tgz ]
+      ops_files:
+      - bosh-deployment/misc/bosh-dev.yml
+      vars:
+        internal_ip: 10.10.1.241
+
+resources:
+- name: bosh-deployment
+  type: git
+  source:
+    uri: https://github.com/cloudfoundry/bosh-deployment.git
+    branch: master
+
+- name: bucc-pipelines
+  type: git
+  source:
+    uri: https://github.com/starkandwayne/bucc-pipelines.git
+
+- name: stemcell
+  type: bosh-io-stemcell
+  source: { name: ((bosh_stemcell)) }
+
+- name: deploy
+  type: bosh-deployment
+  source:
+    deployment: bosh-lite
+    target: ((bosh_environment))
+    client: ((bosh_client))
+    client_id: ((bosh_client))
+    client_secret: ((bosh_client_secret))
+    ca_cert: ((bosh_ca_cert))
+
+resource_types:
+- name: bosh-deployment
+  type: docker-image
+  source:
+    repository: cloudfoundry/bosh-deployment-resource
+    tag: latest
