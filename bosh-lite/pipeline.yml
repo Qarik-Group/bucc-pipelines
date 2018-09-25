@@ -13,7 +13,6 @@ jobs:
       - bosh-deployment/misc/bosh-dev.yml
       - bosh-deployment/bosh-lite.yml
       - bucc-pipelines/bosh-lite/bosh/operations/name.yml
-      - bucc-pipelines/bosh-lite/bosh/operations/stemcell.yml
       vars:
         deployment_name: bosh-lite
         director_name: bosh-lite
