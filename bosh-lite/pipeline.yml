@@ -14,6 +14,7 @@ jobs:
       - bucc-pipelines/bosh-lite/bosh/operations/name.yml
       vars:
         deployment_name: bosh-lite
+        director_name: bosh-lite
         internal_ip: 10.10.1.241
 
 resources:
