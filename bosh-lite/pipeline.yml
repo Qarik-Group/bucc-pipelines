@@ -11,6 +11,7 @@ jobs:
       stemcells: [ stemcell/stemcell.tgz ]
       ops_files:
       - bosh-deployment/misc/bosh-dev.yml
+      - bucc-pipelines/bosh/operations/name.yml
       vars:
         deployment_name: bosh-lite
         internal_ip: 10.10.1.241
