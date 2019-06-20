@@ -1,6 +1,6 @@
-- type: replace
+- type: remove
   path: /instance_groups/name=worker/jobs/name=worker/properties/tags
-  value: ((worker_tags.value))
+  # value: ((worker_tags.value))
 
 - type: replace
   path: /instance_groups/name=worker/azs
