@@ -17,8 +17,8 @@ jobs:
       - bucc-pipelines/concourse-external-workers/bosh/operations/credhub_pseudo_array.yml
       vars:
         deployment_name: concourse_workers
-        concourse_version: 5.3.0
-        concourse_sha1: 97410a92b3c2385b728a7414ad34520491701d4e
+        concourse_version: 5.5.1
+        concourse_sha1: 4213070d9a08847cda64c5c1e51d462ab9671299
 
 resources:
 - name: concourse-deployment
@@ -26,7 +26,7 @@ resources:
   source:
     uri: https://github.com/concourse/concourse-bosh-deployment.git
     branch: master
-    tag_filter: "v5.3.0"
+    tag_filter: "v5.5.1"
 
 - name: bucc-pipelines
   type: git
