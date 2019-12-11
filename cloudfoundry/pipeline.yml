@@ -1,0 +1,62 @@
+jobs:
+- name: cf
+  plan:
+  - aggregate:
+    - get: stemcell
+    - get: cf-deployment
+    - get: bucc-pipelines
+  - put: credhub
+    params: { schema_file: bucc-pipelines/cloudfoundry/bosh/schema.yml }
+  - put: deploy
+    params:
+      manifest: cf-deployment/cf-deployment.yml
+      stemcells: [ stemcell/stemcell.tgz ]
+      ops_files: ((ops_files.value))
+
+resources:
+- name: cf-deployment
+  type: git
+  source:
+    uri: https://github.com/cloudfoundry/cf-deployment.git
+    branch: master
+
+- name: bucc-pipelines
+  type: git
+  source:
+    uri: https://github.com/starkandwayne/bucc-pipelines.git
+    branch: cf
+
+- name: stemcell
+  type: bosh-io-stemcell
+  source: { name: ((bosh_stemcell)) }
+
+- name: deploy
+  type: bosh-deployment
+  source:
+    deployment: cf
+    target: ((bosh_environment))
+    client: ((bosh_client))
+    client_id: ((bosh_client))
+    client_secret: ((bosh_client_secret))
+    ca_cert: ((bosh_ca_cert))
+
+- name: credhub
+  type: credhub-schema
+  source:
+    server: ((credhub_url))
+    client_name: ((credhub_username))
+    client_secret: ((credhub_password))
+    ca_cert: ((credhub_ca_cert))
+    path: /((bosh_name))/cf
+
+resource_types:
+- name: bosh-deployment
+  type: docker-image
+  source:
+    repository: cloudfoundry/bosh-deployment-resource
+    tag: latest
+- name: credhub-schema
+  type: docker-image
+  source:
+    repository: rkoster/credhub-schema-resource
+    tag: latest

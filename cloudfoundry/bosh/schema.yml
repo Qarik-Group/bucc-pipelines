@@ -1,0 +1,6 @@
+required:
+- system_domain
+properties:
+  system_domain:
+    type: string
+    default: bosh-lite.com
